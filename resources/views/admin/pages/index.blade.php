@@ -68,29 +68,29 @@
                     </tr>
                   </thead>
                   <tbody>
-                      @foreach ($pages as $key => $page)
-                          <tr>
-                            <td>{{$page['id']}}</td>
-                            <td>{{$page['title']}}</td>
-                            <td>{{$page['category']}}</td>
-                            <td>
-                                @foreach ($page['tags'] as $key => $tag)
-                                    @if(!$loop->last)
-                                        {{$tag}},
-                                    @else
-                                        {{$tag}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td><a href="#" class="btn btn-info text-white">visualizza</a></td>
-                            <td><a href="#" class="btn btn-primary">modifica</a></td>
-                            <td>
-                                <form>
-                                    <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
-                                </form>
-                            </td>
-                          </tr>
-                      @endforeach
+                        @foreach ($pages as $key => $page)
+                            <tr>
+                                <td>{{$page['id']}}</td>
+                                <td>{{$page['title']}}</td>
+                                <td>{{$page['category']}}</td>
+                                <td>
+                                    @foreach ($page['tags'] as $key => $tag)
+                                        @if(!$loop->last)
+                                            {{$tag}},
+                                        @else
+                                            {{$tag}}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td><a href="{{route('admin.pages.show', $page['id'])}}" class="btn btn-info text-white">visualizza</a></td>
+                                <td><a href="{{route('admin.pages.edit', $page['id'])}}" class="btn btn-primary">modifica</a></td>
+                                <td>
+                                    <form>
+                                        <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                   </tbody>
                 </table>
             </div>

@@ -33,3 +33,11 @@ Route::get('/pages', function () {
 Route::get('/pages/create', function () {
     return view('admin.pages.create');
 })->name('admin.pages.create');
+// rotta per edit pages: modifica pagina esistente
+Route::get('/pages/{page}/edit', function () {
+    return view('admin.pages.edit');
+})->name('admin.pages.edit');
+// rotta per edit pages: modifica pagina esistente
+Route::get('/pages/{page}/show', function () {
+    return view('admin.pages.show');
+})->name('admin.pages.show');
