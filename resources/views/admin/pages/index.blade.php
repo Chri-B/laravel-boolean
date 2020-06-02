@@ -52,7 +52,7 @@
                 <h1>Pages</h1>
             </div>
             <div class="col-6">
-                <h2 class="float-right"><a href="#">Crea una pagina</a></h2>
+                <h2 class="float-right"><a href="{{route('admin.pages.create')}}">Crea una pagina</a></h2>
             </div>
         </div>
         <div class="row">

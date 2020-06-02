@@ -25,7 +25,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
+// rotta per index pages: lista di tutte le pagine
 Route::get('/pages', function () {
     return view('admin.pages.index');
 })->name('admin.pages.index');
+// rotta per create pages: creazione nuova pagina
+Route::get('/pages/create', function () {
+    return view('admin.pages.create');
+})->name('admin.pages.create');
