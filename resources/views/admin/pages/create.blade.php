@@ -156,7 +156,7 @@
                         <div class="form-group">
                             @foreach ($tags as $tag)
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" name="tag[]" id="tag{{$tag['id']}}" value="{{$tag['id']}}" {{(is_array(old('tag')) && in_array($tag->id, old('tag'))) ? 'checked' : ''}}>
+                                    <input type="checkbox" class="form-check-input" name="tags[]" id="tag{{$tag['id']}}" value="{{$tag['id']}}" {{(is_array(old('tag')) && in_array($tag->id, old('tag'))) ? 'checked' : ''}}>
                                     <label class="form-check-label" for="tag{{$tag['id']}}">{{$tag['name']}}</label>
                                 </div>
                             @endforeach
@@ -171,7 +171,7 @@
                             @foreach ($photos as $photo)
                                 <div class="form-check form-check-inline">
                                     {{-- name="photo[]" è l'array di destinazione (in cui salvo la selezione utente), il value indica il valore da pushare, l'id è per la corrispondenza al for del LABEL, nel LABEL stampo anche il nome per visualizzazione utente assieme a path in IMG --}}
-                                    <input type="checkbox" class="form-check-input" name="photo[]" id="photo{{$photo['id']}}" value="{{$photo['id']}}" {{(is_array(old('photo')) && in_array($photo->id, old('photo'))) ? 'checked' : ''}}>
+                                    <input type="checkbox" class="form-check-input" name="photos[]" id="photo{{$photo['id']}}" value="{{$photo['id']}}" {{(is_array(old('photo')) && in_array($photo->id, old('photo'))) ? 'checked' : ''}}>
                                     <label class="form-check-label" for="photo{{$photo['id']}}">{{$photo['title']}}</label>
                                     <img src="{{$photo['path']}}" alt="">
                                 </div>

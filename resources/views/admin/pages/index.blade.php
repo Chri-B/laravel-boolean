@@ -23,6 +23,15 @@
         </div>
         <div class="row">
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @elseif (session('failure'))
+                    <div class="alert alert-danger">
+                        {{ session('failure') }}
+                    </div>
+                @endif
                 {{$pages->links()}}
                 <table class="table table-striped table-hover">
                   <thead class="thead-dark">
@@ -59,7 +68,9 @@
                                 </td>
                                 <td>
                                     @if (Auth::id() == $page['user_id'])
-                                        <form>
+                                        <form action="{{route('admin.pages.destroy', $page->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
                                             <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
                                         </form>
                                     @endif

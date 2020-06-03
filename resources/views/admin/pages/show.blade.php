@@ -1,21 +1,3 @@
-@php
-    $page = [
-        'id' => 1,
-        'title' => 'lorem Ipsum',
-        'summary' => 'Lorem ipsum dolor sit',
-        'body' => 'Questo è un testo',
-        'category_id' => 3,
-        'tags' => [
-          1 ,
-          3 ,
-          5
-        ],
-        'photos' => [
-          3, 2
-        ]
-    ];
-@endphp
-
 @extends('layouts.app')
 
 @section('content')
@@ -38,13 +20,15 @@
                 <h3>{{$page['category_id']}}</h3>
                 @foreach ($page['photos'] as $photo)
                     <div>
-                        <img src="#" alt="photo">
+                        {{-- @dd($page) --}}
+                        {{-- <img src="{{asset('storage/'  . $photo->path)}}" alt="photo"> --}}
+                        <img src="{{$photo->path}}" alt="photo">
                     </div>
                 @endforeach
                 <h4>{{$page['summary']}}</h4>
                 <p>{{$page['body']}}</p>
                 @foreach ($page['tags'] as $tag)
-                    <small>{{$tag}}</small>
+                    <small>{{$tag->name}}</small>
                 @endforeach
             </div>
         </div>

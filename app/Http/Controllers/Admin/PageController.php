@@ -62,10 +62,10 @@ class PageController extends Controller
             'category_id' => 'required',
             'title' => 'required|string',
             'summary' => 'required|max:150',
-            'tag' => 'required|array',
-            'tag.*' => 'exists:tags,id',
-            'photo' => 'required|array',
-            'photo.*' => 'exists:photos,id',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
+            'photos' => 'required|array',
+            'photos.*' => 'exists:photos,id',
             'body' => 'required|string'
         ]);
 
@@ -74,6 +74,22 @@ class PageController extends Controller
             ->withErrors($validator)
             ->withInput();
         }
+
+        $page = new Page;
+        $page->fill($data);
+        $saved = $page->save();
+        if (!$saved) {
+            return redirect()->back();
+        }
+
+        if(isset($data['tags'])) {
+            $page->tags()->attach($data['tags']);
+        }
+        if(isset($data['photos'])) {
+            $page->photos()->attach($data['photos']);
+        }
+
+        return redirect()->route('admin.pages.show', $page->id);
     }
 
     /**
@@ -84,7 +100,8 @@ class PageController extends Controller
      */
     public function show($id)
     {
-        //
+        $page = Page::findOrFail($id);
+        return view('admin.pages.show', compact('page'));
     }
 
     /**
@@ -118,6 +135,21 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $page = Page::findOrFail($id);
+        $userId = Auth::id();
+        $author = $page->user_id;
+
+        if ($userId != $author) {
+            return redirect()->route('admin.pages.index')
+            ->with('failure', 'Non sei autorizzato ad eliminare la pagina ' . $page->id);
+        }
+        
+        $page->tags()->detach();
+        $page->photos()->detach();
+
+        $page->delete();
+
+        return redirect()->route('admin.pages.index')
+        ->with('success', 'Cancellazione della pagina ' . $page->id . ' riuscita');
     }
 }
