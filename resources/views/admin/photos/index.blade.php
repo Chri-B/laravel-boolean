@@ -1,24 +1,3 @@
-@php
-    $photos = [
-      [
-        'id' => 1,
-        'title' => 'Titolo foto 1',
-      ],
-      [
-        'id' => 2,
-        'title' => 'Titolo foto 2',
-      ],
-      [
-        'id' => 3,
-        'title' => 'Titolo foto 3',
-      ],
-      [
-        'id' => 4,
-        'title' => 'Titolo foto 4',
-      ],
-    ];
-@endphp
-
 @extends('layouts.app')
 @section('content')
     <div class="container">
@@ -43,6 +22,15 @@
         </div>
         <div class="row">
             <div class="col-12">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @elseif (session('failure'))
+                    <div class="alert alert-danger">
+                        {{ session('failure') }}
+                    </div>
+                @endif
                 <table class="table table-striped table-hover">
                   <thead class="thead-dark">
                     <tr>
@@ -55,13 +43,21 @@
                         @foreach ($photos as $key => $photo)
                             <tr>
                                 <td>{{$photo['id']}}</td>
-                                <td>{{$photo['title']}}</td>
-                                <td><a href="#" class="btn btn-info text-white">visualizza</a></td>
-                                <td><a href="#" class="btn btn-primary">modifica</a></td>
+                                <td>{{$photo['name']}}</td>
+                                <td><a href="{{route('admin.photos.show', $photo->id)}}" class="btn btn-info text-white">visualizza</a></td>
                                 <td>
-                                    <form>
-                                        <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
-                                    </form>
+                                    @if (Auth::id() == $photo['user_id'])
+                                        <a href="{{route('admin.photos.edit', $photo->id)}}" class="btn btn-primary">modifica</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (Auth::id() == $photo['user_id'])
+                                        <form action="{{route('admin.photos.destroy', $photo->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

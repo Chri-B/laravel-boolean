@@ -15,9 +15,19 @@
         </div>
         <div class="row">
             <div class="col-8 offset-2">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @elseif (session('failure'))
+                    <div class="alert alert-danger">
+                        {{ session('failure') }}
+                    </div>
+                @endif
                 <h2>ID: {{$page['id']}}</h2>
                 <h1>{{$page['title']}}</h1>
-                <h3>{{$page['category_id']}}</h3>
+                <h3>{{$page->category->name}}</h3>
+                <h4>{{$page['summary']}}</h4>
                 @foreach ($page['photos'] as $photo)
                     <div>
                         {{-- @dd($page) --}}
@@ -25,7 +35,6 @@
                         <img src="{{$photo->path}}" alt="photo">
                     </div>
                 @endforeach
-                <h4>{{$page['summary']}}</h4>
                 <p>{{$page['body']}}</p>
                 @foreach ($page['tags'] as $tag)
                     <small>{{$tag->name}}</small>

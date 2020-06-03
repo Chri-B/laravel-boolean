@@ -14,74 +14,34 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <h1>Inserisci una nuova pagina</h1>
+                <h1>Inserisci una nuova foto</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <form action="" method="post">
+                <form action="{{route('admin.photos.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Lorem ipsum">
-                        @error('title')
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Lorem ipsum" value="{{old('name')}}">
+                        @error('name')
                             <small class="alert alert-danger form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="summary">Summary</label>
-                        <input type="text" class="form-control" id="summary" placeholder="Lorem ipsum dolor sit amet">
-                        @error('summary')
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" rows="12"></textarea>
+                        @error('description')
                             <small class="alert alert-danger form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
-                        <select class="custom-select">
-                            <option selected>Open this select menu</option>
-                            @foreach ($categories as $category)
-                                <option value="{{$category['id']}}" {{old('name') ? 'selected' : ''}}>{{$category['name']}}</option>
-                            @endforeach
-                        </select>
-                        @error('category')
-                            <small class="alert alert-danger form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="body">Body</label>
-                        <textarea name="body" class="form-control" rows="12"></textarea>
-                        @error('body')
-                            <small class="alert alert-danger form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="tags">Tags</label>
-                        <div class="form-group">
-                            @foreach ($tags as $tag)
-                                <div class="form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" name="tag[]" id="tag{{$tag['id']}}" value="{{$tag['id']}}">
-                                    <label class="form-check-label" for="tag{{$tag['id']}}">{{$tag['name']}}</label>
-                                </div>
-                            @endforeach
+                        <div class="custom-file">
+                            <input type="file" name="path" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
-                        @error('tags')
-                            <small class="alert alert-danger form-text text-muted">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="tags">Photos</label>
-                        <div class="form-group">
-                            @foreach ($photos as $photo)
-                                <div class="form-check form-check-inline">
-                                    {{-- name="photo[]" è l'array di destinazione (in cui salvo la selezione utente), il value indica il valore da pushare, l'id è per la corrispondenza al for del LABEL, nel LABEL stampo anche il nome per visualizzazione utente assieme a path in IMG --}}
-                                    <input type="checkbox" class="form-check-input" name="photo[]" id="photo{{$photo['id']}}" value="{{$photo['id']}}">
-                                    <label class="form-check-label" for="photo{{$photo['id']}}">{{$photo['title']}}</label>
-                                    <img src="{{$photo['path']}}" alt="">
-                                </div>
-                            @endforeach
-                        </div>
-                        @error('photos')
+                        @error('path')
                             <small class="alert alert-danger form-text text-muted">{{ $message }}</small>
                         @enderror
                     </div>

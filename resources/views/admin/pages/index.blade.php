@@ -68,7 +68,7 @@
                                 </td>
                                 <td>
                                     @if (Auth::id() == $page['user_id'])
-                                        <form action="{{route('admin.pages.destroy', $page->id)}}" method="post">
+                                        <form action="{{route('admin.pages.destroy', $page['id'])}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <input class="btn btn-danger" type="submit" name="elimina" value="elimina">

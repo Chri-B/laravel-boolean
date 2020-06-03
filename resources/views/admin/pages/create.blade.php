@@ -1,98 +1,3 @@
-{{-- @php
-    $pages = [
-        [
-            "id" => 1,
-            "title" => 'lorem Ipsum',
-            "category" => 1,
-            "tags" => [
-                1,
-                3,
-                4
-            ]
-        ],
-        [
-            "id" => 2,
-            "title" => 'Dolor Sit',
-            "category" => 2,
-            "tags" => [
-                5,
-                3,
-                4
-            ]
-        ],
-        [
-            "id" => 3,
-            "title" => 'mollit anim id est laborum.',
-            "category" => 2,
-            "tags" => [
-                1,
-                2
-            ]
-        ]
-    ];
-    $categories = [
-        [
-            'id' => 1,
-            'name' => 'miscellanea',
-            'description' => 'Lorem sit'
-        ],
-        [
-            'id' => 2,
-            'name' => 'category-2',
-            'description' => 'dolor lorem'
-        ],
-        [
-            'id' => 3,
-            'name' => 'category-3',
-            'description' => 'ipsum amet'
-        ],
-    ];
-    $tags = [
-        [
-            'id' => 1,
-            'name' => 'tag-1',
-            'description' => 'esempio tag-1'
-        ],
-        [
-            'id' => 2,
-            'name' => 'tag-2',
-            'description' => 'esempio tag-2'
-        ],
-        [
-            'id' => 3,
-            'name' => 'tag-3',
-            'description' => 'esempio tag-3'
-        ],
-        [
-            'id' => 4,
-            'name' => 'tag-4',
-            'description' => 'esempio tag-4'
-        ],
-        [
-            'id' => 5,
-            'name' => 'tag-5',
-            'description' => 'esempio tag-5'
-        ]
-    ];
-    $photos = [
-        [
-            'id' => 1,
-            'title' => 'Lorem',
-            'path' => 'images/lorem.jpg'
-        ],
-        [
-            'id' => 2,
-            'title' => 'Ipsum',
-            'path' => 'images/ipsum.jpg'
-        ],
-        [
-            'id' => 3,
-            'title' => 'Dolor',
-            'path' => 'images/dolor.jpg'
-        ],
-    ];
-@endphp --}}
-
 @extends('layouts.app')
 @section('content')
     <div class="container">
@@ -156,7 +61,7 @@
                         <div class="form-group">
                             @foreach ($tags as $tag)
                                 <div class="form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" name="tags[]" id="tag{{$tag['id']}}" value="{{$tag['id']}}" {{(is_array(old('tag')) && in_array($tag->id, old('tag'))) ? 'checked' : ''}}>
+                                    <input type="checkbox" class="form-check-input" name="tags[]" id="tag{{$tag['id']}}" value="{{$tag['id']}}" {{(is_array(old('tags')) && in_array($tag->id, old('tags'))) ? 'checked' : ''}}>
                                     <label class="form-check-label" for="tag{{$tag['id']}}">{{$tag['name']}}</label>
                                 </div>
                             @endforeach
@@ -171,7 +76,7 @@
                             @foreach ($photos as $photo)
                                 <div class="form-check form-check-inline">
                                     {{-- name="photo[]" è l'array di destinazione (in cui salvo la selezione utente), il value indica il valore da pushare, l'id è per la corrispondenza al for del LABEL, nel LABEL stampo anche il nome per visualizzazione utente assieme a path in IMG --}}
-                                    <input type="checkbox" class="form-check-input" name="photos[]" id="photo{{$photo['id']}}" value="{{$photo['id']}}" {{(is_array(old('photo')) && in_array($photo->id, old('photo'))) ? 'checked' : ''}}>
+                                    <input type="checkbox" class="form-check-input" name="photos[]" id="photo{{$photo['id']}}" value="{{$photo['id']}}" {{(is_array(old('photos')) && in_array($photo->id, old('photos'))) ? 'checked' : ''}}>
                                     <label class="form-check-label" for="photo{{$photo['id']}}">{{$photo['title']}}</label>
                                     <img src="{{$photo['path']}}" alt="">
                                 </div>
