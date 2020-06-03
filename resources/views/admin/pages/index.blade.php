@@ -1,37 +1,3 @@
-@php
-    $pages = [
-        [
-            "id" => 1,
-            "title" => 'lorem Ipsum',
-            "category" => 1,
-            "tags" => [
-                1,
-                3,
-                4
-            ]
-        ],
-        [
-            "id" => 2,
-            "title" => 'Dolor Sit',
-            "category" => 2,
-            "tags" => [
-                5,
-                3,
-                4
-            ]
-        ],
-        [
-            "id" => 3,
-            "title" => 'mollit anim id est laborum.',
-            "category" => 2,
-            "tags" => [
-                1,
-                2
-            ]
-        ]
-    ];
-@endphp
-
 @extends('layouts.app')
 
 @section('content')
@@ -57,6 +23,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                {{$pages->links()}}
                 <table class="table table-striped table-hover">
                   <thead class="thead-dark">
                     <tr>
@@ -72,27 +39,36 @@
                             <tr>
                                 <td>{{$page['id']}}</td>
                                 <td>{{$page['title']}}</td>
-                                <td>{{$page['category']}}</td>
+                                <td>{{$page['category']->name}}</td>
                                 <td>
                                     @foreach ($page['tags'] as $key => $tag)
                                         @if(!$loop->last)
-                                            {{$tag}},
+                                            {{$tag->name}},
                                         @else
-                                            {{$tag}}
+                                            {{$tag->name}}
                                         @endif
                                     @endforeach
                                 </td>
-                                <td><a href="{{route('admin.pages.show', $page['id'])}}" class="btn btn-info text-white">visualizza</a></td>
-                                <td><a href="{{route('admin.pages.edit', $page['id'])}}" class="btn btn-primary">modifica</a></td>
                                 <td>
-                                    <form>
-                                        <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
-                                    </form>
+                                    <a href="{{route('admin.pages.show', $page['id'])}}" class="btn btn-info text-white">visualizza</a>
+                                </td>
+                                <td>
+                                    @if (Auth::id() == $page['user_id'])
+                                        <a href="{{route('admin.pages.edit', $page['id'])}}" class="btn btn-primary">modifica</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (Auth::id() == $page['user_id'])
+                                        <form>
+                                            <input class="btn btn-danger" type="submit" name="elimina" value="elimina">
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
                   </tbody>
                 </table>
+                {{$pages->links()}}
             </div>
         </div>
     </div>
