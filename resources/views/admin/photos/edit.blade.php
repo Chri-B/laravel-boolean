@@ -14,6 +14,15 @@
         </div>
         <div class="row">
             <div class="col-12">
+                @if (session('failure'))
+                    <div class="alert alert-warning">
+                        {{ session('failure') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <h1>Inserisci una nuova foto</h1>
             </div>
         </div>

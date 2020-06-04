@@ -115,12 +115,17 @@ class PhotoController extends Controller
             return redirect()->route('admin.photos.index')
             ->with('failure', 'Non sei autorizzato a modificare la foto ' . $photo->id);
         }
+        if (!isset($data['path'])) {
+            return redirect()->back()
+            ->with('failure', 'problemi modifica foto ' . $photo->id);
+        }
 
         $path_deleted = Storage::disk('public')->delete($photo['path']);
         if (!$path_deleted) {
             return redirect()->route('admin.photos.index')
             ->with('failure', 'Eliminazione vecchio foto_path non riuscita');
         }
+
 
         $new_path = Storage::disk('public')->put('images', $data['path']);
         $data['path'] = $new_path;
@@ -163,6 +168,7 @@ class PhotoController extends Controller
             return redirect()->route('admin.photos.index')
             ->with('failure', 'Non sei autorizzato ad eliminare la foto ' . $photo->id);
         }
+        $photo->pages()->detach();
 
         $deleted = $photo->delete();
         if (!$deleted) {
@@ -172,11 +178,11 @@ class PhotoController extends Controller
         // dd($photo['path']);
 
         $path_deleted = Storage::disk('public')->delete($photo['path']);
-
         if (!$path_deleted) {
             return redirect()->route('admin.photos.index')
             ->with('failure', 'Eliminazione foto path ' . $photo->id . ' non riuscito');
         }
+
 
         return redirect()->route('admin.photos.index')
         ->with('success', 'Eliminazione foto ' . $photo->id . ' riuscita');
