@@ -93,7 +93,8 @@ class PhotoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $photo = Photo::findOrFail($id);
+        return view('admin.photos.edit', compact('photo'));
     }
 
     /**
@@ -105,7 +106,45 @@ class PhotoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $photo = Photo::findOrFail($id);
+        $data = $request->all();
+        $autore = $photo->user_id;
+        $user = Auth::id();
+
+        if ($autore != $user) {
+            return redirect()->route('admin.photos.index')
+            ->with('failure', 'Non sei autorizzato a modificare la foto ' . $photo->id);
+        }
+
+        $path_deleted = Storage::disk('public')->delete($photo['path']);
+        if (!$path_deleted) {
+            return redirect()->route('admin.photos.index')
+            ->with('failure', 'Eliminazione vecchio foto_path non riuscita');
+        }
+
+        $new_path = Storage::disk('public')->put('images', $data['path']);
+        $data['path'] = $new_path;
+        $validator = Validator::make($data, [
+            'name' => 'required|string|max:80',
+            'description' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $photo->fill($data);
+        $updated = $photo->update();
+        if (!$updated) {
+            return redirect()->route('admin.photos.index')
+            ->with('failure', 'Salvataggio della foto ' . $photo->id . ' fallito');
+        }
+
+        return redirect()->route('admin.photos.show', $photo->id)
+        ->with('success', 'Modifica foto ' . $photo->id . ' riuscita');
+
     }
 
     /**
