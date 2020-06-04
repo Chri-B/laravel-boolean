@@ -30,7 +30,7 @@
             </div>
             <div class="col-4">
                 {{-- @dd($photo->path) --}}
-                <img src="{{asset('storage' . $photo->path)}}" alt="{{$photo['name']}}">
+                <img src="{{asset('storage/' . $photo->path)}}" alt="{{$photo['name']}}">
             </div>
         </div>
     </div>

@@ -47,7 +47,7 @@ class PhotoController extends Controller
     {
         $data = $request->all();
         $path = Storage::disk('public')->put('images', $data['path']);
-
+        $data['path'] = $path;
         $data['user_id'] = Auth::id();
         $validator = Validator::make($data, [
             'name' => 'required|string|max:80',
@@ -81,6 +81,7 @@ class PhotoController extends Controller
     public function show($id)
     {
         $photo = Photo::findOrFail($id);
+        // dd($photo->path);
         return view('admin.photos.show', compact('photo'));
     }
 

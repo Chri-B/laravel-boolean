@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-file">
-                            <input type="file" name="path" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <input type="file" name="path" class="custom-file-input" id="inputGroupFile01">
                             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
                         @error('path')
