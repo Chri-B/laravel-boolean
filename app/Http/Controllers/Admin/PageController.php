@@ -60,7 +60,7 @@ class PageController extends Controller
         $data['user_id'] = Auth::id();
         $validator = Validator::make($data, [
             'category_id' => 'required',
-            'title' => 'required|string',
+            'title' => 'required|string|max:255',
             'summary' => 'required|max:150',
             'tags' => 'required|array',
             'tags.*' => 'exists:tags,id',

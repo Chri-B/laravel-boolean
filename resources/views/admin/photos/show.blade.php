@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-12">
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -24,13 +24,17 @@
                         {{ session('failure') }}
                     </div>
                 @endif
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
                 <h2>ID: {{$photo['id']}}</h2>
                 <h1>{{$photo['name']}}</h1>
                 <p>{{$photo['description']}}</p>
             </div>
-            <div class="col-4">
+            <div class="col-8 text-center">
                 {{-- @dd($photo->path) --}}
-                <img src="{{asset('storage/' . $photo->path)}}" alt="{{$photo['name']}}">
+                <img src="{{asset('storage/' . $photo->path)}}" alt="{{$photo['name']}}" class="img-thumbnail">
             </div>
         </div>
     </div>

@@ -116,6 +116,30 @@ class PhotoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $photo = Photo::findOrFail($id);
+        $autore = $photo->user_id;
+        $user = Auth::id();
+
+        if ($autore != $user) {
+            return redirect()->route('admin.photos.index')
+            ->with('failure', 'Non sei autorizzato ad eliminare la foto ' . $photo->id);
+        }
+
+        $deleted = $photo->delete();
+        if (!$deleted) {
+            return redirect()->route('admin.photos.index')
+            ->with('failure', 'Eliminazione foto ' . $photo->id . ' non riuscita');
+        }
+        // dd($photo['path']);
+
+        $path_deleted = Storage::disk('public')->delete($photo['path']);
+
+        if (!$path_deleted) {
+            return redirect()->route('admin.photos.index')
+            ->with('failure', 'Eliminazione foto path ' . $photo->id . ' non riuscito');
+        }
+
+        return redirect()->route('admin.photos.index')
+        ->with('success', 'Eliminazione foto ' . $photo->id . ' riuscita');
     }
 }

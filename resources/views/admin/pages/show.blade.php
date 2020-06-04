@@ -29,10 +29,10 @@
                 <h3>{{$page->category->name}}</h3>
                 <h4>{{$page['summary']}}</h4>
                 @foreach ($page['photos'] as $photo)
-                    <div>
+                    <div class="text-center">
                         {{-- @dd($page) --}}
                         {{-- <img src="{{asset('storage/'  . $photo->path)}}" alt="photo"> --}}
-                        <img src="{{$photo->path}}" alt="photo">
+                        <a href="{{route('admin.photos.show', $page->id)}}"><img class="img-thumbnail" src="{{asset('storage/'. $photo->path)}}" alt="{{$photo->name}}"></a> 
                     </div>
                 @endforeach
                 <p>{{$page['body']}}</p>

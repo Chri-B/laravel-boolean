@@ -39,7 +39,6 @@
                     <div class="form-group">
                         <label for="category">Category</label>
                         <select name="category_id" id="category_id" class="custom-select">
-                            <option selected>Open this select menu</option>
                             @foreach ($categories as $category)
                                 {{-- @dd(old('category_id')) --}}
                                 <option value="{{$category['id']}}" {{(!empty(old('category_id'))) && (old('category_id') == $category['id']) ? 'selected' : ''}}>{{$category['name']}}</option>
@@ -78,7 +77,7 @@
                                     {{-- name="photo[]" è l'array di destinazione (in cui salvo la selezione utente), il value indica il valore da pushare, l'id è per la corrispondenza al for del LABEL, nel LABEL stampo anche il nome per visualizzazione utente assieme a path in IMG --}}
                                     <input type="checkbox" class="form-check-input" name="photos[]" id="photo{{$photo['id']}}" value="{{$photo['id']}}" {{(is_array(old('photos')) && in_array($photo->id, old('photos'))) ? 'checked' : ''}}>
                                     <label class="form-check-label" for="photo{{$photo['id']}}">{{$photo['title']}}</label>
-                                    <img src="{{$photo['path']}}" alt="">
+                                    <img src="{{asset('storage/' . $photo->path)}}" alt="{{$photo['name']}}">
                                 </div>
                             @endforeach
                         </div>
